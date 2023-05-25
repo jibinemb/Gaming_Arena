@@ -1,0 +1,36 @@
+{% extends 'userbase.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+{% block background %} {% endblock %}
+{% block body %}
+
+<div class="about" id="about">
+    <div class="container">
+        <div class="col-md-4 agileits_about_left">
+            <h3 class="w3l_head">UpComing Events</h3>
+            <p class="w3ls_head_para"></p>
+        </div>
+        {% for i in event %}
+        <div class="agileits_banner_bottom_grids">
+            
+            <div class="col-md-6 agileits_banner_bottom_grid_r">
+                <div class="agileits_banner_btm_grid_r">
+                    <img src="{{i.game.image.url}}" alt=" " class="img-responsive">
+                    
+                </div>
+                <div class="col-md-6 agileits_banner_bottom_grid_l">
+                    <h4>{{i.game.name}}</h4>
+                    <h6>Remaining Slots:{{i.max_players}}</h6>
+                    <p><i>Starting time:{{i.start_time}} Ending time:{{i.end_time}}</i></p>
+                    <a href='/bookevent/{{i.id}}/{{i.game.id}}/' onclick="return confirm('Confirm Booking ?')"><button type="submit" class="btn btn-primary"><i class="bi bi-joystick"></i> Book Game</button></a>
+
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+<!-- //about-bottom -->
+{% endblock %}
