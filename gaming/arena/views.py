@@ -169,6 +169,7 @@ def make_payment(request, booking_id):
         booking=Booking.objects.filter(user=id)
         all={'user':user,'booking':booking,'msg':'Booking Succesfull'}
         return render(request,'myevents.html',all)
+        # return redirect('/my')
     else:
         id = request.session['id']
         user = User.objects.filter(id=id)
