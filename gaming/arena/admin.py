@@ -81,3 +81,9 @@ class PaymentAdmin(admin.ModelAdmin):
     get_bookid_user.short_description = 'User'
 
 admin.site.register(Result)
+
+class SelectAdmin(admin.ModelAdmin):
+    list_display = ('event', 'winner')
+
+admin.site.register(Winner, SelectAdmin)
+admin.site.register(Event)

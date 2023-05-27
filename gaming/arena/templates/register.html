@@ -37,7 +37,7 @@
 									</p>
 								</div>
 			      	</div>
-							<form action="" method="post" class="signin-form">
+							<form action="" method="post" class="signin-form" enctype="multipart/form-data">
                                 {% csrf_token %}
 			      		<div class="form-group mb-3">
 			      			<label class="label" for="name">Name</label>
@@ -62,6 +62,10 @@
                         <div class="form-group mb-3">
                             <label class="label" for="email">Email</label>
                             <input type="email" class="form-control" placeholder="Enter your Email" name="email" required>
+                        </div>
+						<div class="form-group mb-3">
+                            <label class="label" for="image">Photo</label>
+                            <input type="file" class="form-control" placeholder="Enter your Email" name="image" required>
                         </div>
 		            <div class="form-group mb-3">
 		            	<label class="label" for="password">Password</label>

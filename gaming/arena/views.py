@@ -29,6 +29,7 @@ def register(request):
         address = request.POST.get('address')
         email = request.POST.get('email')
         password = request.POST.get('password')
+        image=request.FILES['image']
 
         # Check if email already exists in the database
         if User.objects.filter(email=email).exists():
@@ -40,7 +41,7 @@ def register(request):
 
         # Create a new user object and save it to the database
         user = User(name=name, age=age, location=location, phone_number=phone_number,
-                    address=address, email=email, password=password)
+                    address=address, email=email, password=password,image=image)
         user.save()
 
         # Redirect the user to the login page
@@ -57,7 +58,9 @@ def login(request):
         if check.filter(email=email,password=password).exists():
             for i in check:
                 id=i.id
+                email=i.email
                 request.session['id']=id
+                request.session['email']=email
             return redirect('/user_home')
         else:
             msg='Incorrect Email Or Password'
@@ -85,15 +88,25 @@ def all_games(request):
     all={'user':user,
          'a':a}
     return render(request,'all_games.html',all)
+from datetime import date
 
 def view_events(request):
-    id=request.session['id']
-    today=date.today()
-    event= Event.objects.filter(Q(start_time__gte=today)).order_by('-timestamp')  
-    user=User.objects.filter(id=id)
-    all={'user':user,
-         'event':event}
-    return render(request,'all_events.html',all)
+    id = request.session['id']
+    today = date.today()
+    events = Event.objects.filter(Q(start_time__gte=today)).order_by('-timestamp')
+    user = User.objects.filter(id=id)
+
+    # Calculate days left for each event
+    for event in events:
+        days_left = (event.start_time - today).days
+        event.days_left = days_left
+
+    context = {
+        'user': user,
+        'events': events
+    }
+    return render(request, 'all_events.html', context)
+
 
 
 
@@ -176,3 +189,89 @@ def upload_result(request,id):
 
 
 
+def viewprofile(request):
+    id=request.session['id']
+    a=User.objects.filter(id=id)
+    return render(request,'viewprofile.html',{'user':a})
+
+
+def edituer(request):
+    if request.method == 'POST':
+        id = request.session['id']
+        user = User.objects.filter(id=id)
+        up = User.objects.get(id=id)
+        name = request.POST.get('name')
+        address = request.POST.get('address')
+        phone_number = request.POST.get('phone_number')
+        email = request.POST.get('email')
+
+        if 'image' in request.FILES:
+            image = request.FILES['image']
+            up.image = image
+
+        up.name = name
+        up.address = address
+        up.phone_number = phone_number
+        up.email = email
+
+        up.save()
+        ud = User.objects.filter(email=request.session['email'])
+        context = {'details': ud,
+                   'user': user,
+                   'msg': 'Profile Details Updated'}
+
+        return render(request, 'editprofile.html', context)
+    else:
+        id = request.GET.get('id')
+        id = request.session['id']
+        up = User.objects.filter(id=id)
+        user =User.objects.filter(id=id)
+        all_data = {
+            'user': user,
+            'details': up,
+        }
+        return render(request, 'editprofile.html', all_data)
+
+def changepassword(request):
+    id = request.session['id']
+    print(id)
+    user = User.objects.filter(id=id)
+    all = {
+        'user': user,
+    }
+    if request.method == 'POST':
+        email = request.session['email']
+        new_password = request.POST.get('new_password')
+        current_password = request.POST.get('current_password')
+        print('Email Is:' + email)
+        print("Current_password" + str(current_password))
+        try:
+
+            ul = User.objects.get(email=email, password=current_password)
+
+            if ul is not None:
+                ul.password = new_password  # change field
+                ul.save()
+                msg =  'Password Changed Successfully'
+                all = {
+                    'user': user,
+                    'msg': msg
+                }
+                return render(request, 'change_password.html',all)
+            else:
+                context =  'Your Old Password is Wrong'
+                all = {
+                    'user': user,
+                    'msg': context
+                }
+                return render(request, 'change_password.html',all)
+
+        except User.DoesNotExist:
+            context =  'Your Old Password is Wrong'
+            all = {
+                'user': user,
+                'msg': context
+            }
+            return render(request, 'change_password.html',all)
+    else:
+        return render(request, 'change_password.html',all)

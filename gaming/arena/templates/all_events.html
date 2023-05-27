@@ -11,7 +11,7 @@
             <h3 class="w3l_head">UpComing Events</h3>
             <p class="w3ls_head_para"></p>
         </div>
-        {% for i in event %}
+        {% for i in events %}
         <div class="agileits_banner_bottom_grids">
             
             <div class="col-md-6 agileits_banner_bottom_grid_r">
@@ -22,7 +22,8 @@
                 <div class="col-md-6 agileits_banner_bottom_grid_l">
                     <h4>{{i.game.name}}</h4>
                     <h6>Remaining Slots:{{i.max_players}}</h6>
-                    <p><i>Starting time:{{i.start_time}} Ending time:{{i.end_time}}</i></p>
+                    <p><i>Starting Date:{{i.start_time}} Ending Date:{{i.end_time}}</i></p>
+                    <p><i>{{ i.days_left }} Days Left </i></p>
                     <a href='/bookevent/{{i.id}}/{{i.game.id}}/' onclick="return confirm('Confirm Booking ?')"><button type="submit" class="btn btn-primary"><i class="bi bi-joystick"></i> Book Game</button></a>
 
                 </div>
