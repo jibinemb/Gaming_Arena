@@ -104,6 +104,10 @@ select:focus{
     background-color: #e20404;
     color: #fff;
 }
+.gm-ar-btn{
+    background-color: blue !important;
+    color: white !important;
+}
 @media(max-width:576px){
     .wrapper{
         padding: 25px 20px;
@@ -150,12 +154,15 @@ select:focus{
         
             <br><br>
             <div class="py-3 pb-4 border-bottom">
-                <a href="/edit"><button class="btn btn-primary mr-3">Edit Profile</a></button>&nbsp;
-                <a href="/change"><button class="btn border button">Change Password</a></button><br><br>
-  
+                <a href="/edit">
+                    <button class="btn gm-ar-btn mr-3" style="text-decoration: none; background-color: transparent; border: none;">Edit Profile</button>
+                </a>&nbsp;
+                <a href="/change">
+                    <button class="btn border button" style="text-decoration: none; background-color: none; border: none;">Change Password</button>
+                </a><br><br>
+            </div>
             </form>
 
-            </div>
         </div>
     </div>
 
