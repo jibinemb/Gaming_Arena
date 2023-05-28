@@ -196,7 +196,7 @@ def viewprofile(request):
     return render(request,'viewprofile.html',{'user':a})
 
 
-def edituer(request):
+def editprofile(request):
     if request.method == 'POST':
         id = request.session['id']
         user = User.objects.filter(id=id)
@@ -221,7 +221,7 @@ def edituer(request):
                    'user': user,
                    'msg': 'Profile Details Updated'}
 
-        return render(request, 'editprofile.html', context)
+        return redirect('/view')
     else:
         id = request.GET.get('id')
         id = request.session['id']

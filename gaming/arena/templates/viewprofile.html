@@ -14,6 +14,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
+        a {
+    color: #000;
+    text-decoration: none;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -104,10 +109,6 @@ select:focus{
     background-color: #e20404;
     color: #fff;
 }
-.gm-ar-btn{
-    background-color: blue !important;
-    color: white !important;
-}
 @media(max-width:576px){
     .wrapper{
         padding: 25px 20px;
@@ -133,7 +134,7 @@ select:focus{
         <div class="py-2">
             <div class="row py-2">
                 <div class="col-md-6">
-                    <label for="firstname">Full Name</label>
+                    <label for="firstname">First Name</label>
                     <input type="text" class="bg-light form-control" name="name" value="{{i.name}}" readonly>
                 </div>
                 <div class="col-md-6 pt-md-0 pt-3">
@@ -154,15 +155,12 @@ select:focus{
         
             <br><br>
             <div class="py-3 pb-4 border-bottom">
-                <a href="/edit">
-                    <button class="btn gm-ar-btn mr-3" style="text-decoration: none; background-color: transparent; border: none;">Edit Profile</button>
-                </a>&nbsp;
-                <a href="/change" >
-                    <button class="btn border button" style="text-decoration: none; background-color: none; border: none;">Change Password</button>
-                </a><br><br>
-            </div>
+                <a href="/edit"><button class="btn btn-primary mr-3">Edit Profile</a></button>&nbsp;
+                <a href="/change"><button class="btn border button">Change Password</a></button><br><br>
+  
             </form>
 
+            </div>
         </div>
     </div>
 

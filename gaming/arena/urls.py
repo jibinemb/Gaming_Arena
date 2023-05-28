@@ -15,8 +15,8 @@ urlpatterns = [
     path('cancel/<int:id>/',views.cancel),
     path('payment/<int:booking_id>/',views.make_payment,name='payment'),
     path('upload_result/<int:id>/',views.upload_result),
-    path('view',views.viewprofile),
-    path('edit',views.edituer),
+    path('view', views.viewprofile, ),
+    path('edit',views.editprofile),
     path('change',views.changepassword),
 
 
