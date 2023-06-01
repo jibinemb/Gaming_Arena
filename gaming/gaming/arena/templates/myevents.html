@@ -1,0 +1,49 @@
+{% extends 'userbase.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+{% block background %} {% endblock %}
+{% block body %}
+
+<!-- <link href="static/style/css/style.css" rel="stylesheet" type="text/css" media="all" />  -->
+<div class="team-bottom" id="work">
+<div class="about" id="about">
+    <div class="container">
+        <div class="col-md-4 agileits_about_left">
+            <h3 class="w3l_head">Registered Events </h3>
+            <p class="w3ls_head_para"></p>
+        </div>
+        {% if booking %}
+            {% for i in booking %}
+                <div class="agileits_banner_bottom_grids">
+                    <div class="col-md-6 agileits_banner_bottom_grid_r">
+                        <div class="agileits_banner_btm_grid_r">
+                            <img src="{{ i.game.image.url }}" alt=" " class="img-responsive" height="100px" width="100px">
+                        </div>
+                        <div class="col-md-6 agileits_banner_bottom_grid_l">
+                            <h4>{{ i.game.name }}</h4>
+                            <h6>Remaining Slots: {{ i.event.max_players }}</h6>
+                            <p><i>Starting time: {{ i.event.start_time }} Ending time: {{ i.event.end_time }}</i></p>
+                            <div style="display: flex; gap: 10px;">
+                                <a href="/upload_result/{{ i.event.id }}" class="btn btn-primary">
+                                    <i class="bi bi-joystick"></i>Upload Result
+                                </a>
+                                <a href="/cancel/{{ i.id }}/" onclick="return confirm('Cancel Booking ?')" class="btn btn-primary">
+                                    <i class="bi bi-joystick"></i>Cancel Booking
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center">
+            <h4>Currently not available</h4>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<!-- //about-bottom -->
+
+{% endblock %}

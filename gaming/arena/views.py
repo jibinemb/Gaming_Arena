@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from .models import User,Game,Event
 from django.shortcuts import render, redirect,get_object_or_404
@@ -108,10 +109,6 @@ def view_events(request):
     return render(request, 'all_events.html', context)
 
 
-
-
-
-
 def book_event(request, id,gid):
     # get the event object
     userid=request.session['id']
@@ -122,19 +119,19 @@ def book_event(request, id,gid):
     if event.max_players == 0:
         messages.error(request, 'This event is fully booked.')
         return redirect('/allevents')
-
     # create a new booking object
     booking = Booking(user=user, event=event,game=game)
-
     # update the slots available for the event
     event.max_players -= 1
     event.save()
-
     # save the booking object
     booking.save()
-
     messages.success(request, 'Event booked successfully.')
     return redirect(reverse('payment', args=[booking.id]))
+
+
+
+
 def mybookings(request):
     id=request.session['id']
     user=User.objects.filter(id=id)
@@ -142,12 +139,14 @@ def mybookings(request):
     all={'user':user,'booking':booking}
     return render(request,'myevents.html',all)
 
+
 def cancel(request,id):
     a=Booking.objects.get(id=id)
     a.delete()
     return redirect('/my')
 
 from django.http import JsonResponse
+
 
 def make_payment(request, booking_id):
     if request.method == 'POST':
@@ -167,15 +166,17 @@ def make_payment(request, booking_id):
         user = User.objects.filter(id=id)
         user=User.objects.filter(id=id)
         booking=Booking.objects.filter(user=id)
-        all={'user':user,'booking':booking,'msg':'Booking Succesfull'}
-        return render(request,'myevents.html',all)
-        # return redirect('/my')
+        # all={'user':user,'booking':booking,'msg':'Booking Succesfull'}
+        # return render(request,'myevents.html',all)
+        return redirect(mybookings)
     else:
         id = request.session['id']
         user = User.objects.filter(id=id)
         book = get_object_or_404(Booking, id=booking_id)
         payment_amount = 100
         return render(request, 'payment.html', {'user': user, 'payment_amount': payment_amount})
+
+
 def upload_result(request,id):
     if request.method=='POST':
         event=Event.objects.get(id=id)
@@ -232,7 +233,6 @@ def editprofile(request):
             'details': up,
         }
         return render(request, 'editprofile.html', all_data)
-
 def changepassword(request):
     id = request.session['id']
     print(id)
