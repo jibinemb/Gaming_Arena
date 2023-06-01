@@ -1,0 +1,36 @@
+{% extends 'userbase.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+{% block background %} {% endblock %}
+{% block body %}
+<div class="banner">
+    <!--Slider-->
+    <div class="slider">
+        <div class="callbacks_container">
+            <ul class="rslides" id="slider3">
+                {% for i in b %}
+                <li>
+                    <div class="slider-img">
+                        <img src="{{i.image.url}}" class="img-responsive" alt="Gaming Wonderland">
+                    </div>
+                    <div class="slider-info">
+
+                        <h4>{{i.name}}</h4>
+                        <p>{{i.description}}</p>
+                        <a href="#about" class="hvr-shutter-in-horizontal scroll">Read More</a>
+                    </div>
+                </li>
+                {% endfor %}
+                
+                
+
+
+            </ul>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!--//Slider-->
+</div>
+{% endblock %}
